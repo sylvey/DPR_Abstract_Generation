@@ -1,0 +1,95 @@
++ cd /ocean/projects/cis230089p/slin23/full_text_label/gpt
++ source /ocean/projects/cis230089p/slin23/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
+++ '[' -n '' ']'
+++ /ocean/projects/cis230089p/slin23/miniconda3/bin/conda shell.posix activate /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(gptoss20b) '\''
+export PATH='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin'\''
+export CONDA_PREFIX='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''gptoss20b'\''
+export CONDA_PROMPT_MODIFIER='\''(gptoss20b) '\''
+export CONDA_PREFIX_1='\''/ocean/projects/cis230089p/slin23/miniconda3'\''
+export CONDA_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(gptoss20b) '\''
+export PATH='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin'\''
+export CONDA_PREFIX='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''gptoss20b'\''
+export CONDA_PROMPT_MODIFIER='\''(gptoss20b) '\''
+export CONDA_PREFIX_1='\''/ocean/projects/cis230089p/slin23/miniconda3'\''
+export CONDA_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(gptoss20b) '
+++ export PATH=/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin
+++ PATH=/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin
+++ export CONDA_PREFIX=/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
+++ CONDA_PREFIX=/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=gptoss20b
+++ CONDA_DEFAULT_ENV=gptoss20b
+++ export 'CONDA_PROMPT_MODIFIER=(gptoss20b) '
+++ CONDA_PROMPT_MODIFIER='(gptoss20b) '
+++ export CONDA_PREFIX_1=/ocean/projects/cis230089p/slin23/miniconda3
+++ CONDA_PREFIX_1=/ocean/projects/cis230089p/slin23/miniconda3
+++ export CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:128
++ PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:128
++ python gpt_fine_tune.py
+transformers version: 4.56.0
+transformers file  : /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/lib/python3.10/site-packages/transformers/__init__.py
+✅ Loading datasets from cache: ../data/pubmed_datasets_5000_500_500.pkl
+✅ pubmed_train size: 5000
+✅ pubmed_val size: 500
+✅ pubmed_test size: 500
+{'input_ids': [0, 4086, 34527, 10100, 16, 10, 1473, 2199, 9, 5, 2900, 17407, 30, 25822, 5638, 337, 8, 2167, 27548, 5298, 4, 1368, 1879, 11341, 904, 23609, 5580, 21717, 6, 215, 25, 15747, 2463, 5104, 12, 329, 13991, 6793, 36, 705, 329, 705, 238, 5, 778, 7, 1303, 1177, 38407, 10100, 11, 1484, 4, 89, 16, 10, 1762, 9, 335, 15, 5, 9186, 5845, 9, 748, 329, 705, 11, 34648, 1113, 8, 97, 1667, 9, 9724, 14962, 61, 3441, 32243, 8, 34934, 3218, 7, 1100, 4, 5, 2171, 10795, 9, 1368, 1879, 12, 134, 11, 3072, 9724, 14962, 67, 3441, 11152, 5786, 13, 5, 17837, 9, 92, 9186, 4620, 4, 748, 329, 705, 21, 12333, 11, 5, 740, 26649, 7728, 9, 41, 365, 12, 180, 12, 279, 3186, 10864, 19, 5298, 9, 1177, 38407, 10100, 30, 588, 12, 958, 181, 8344, 25378, 21611, 4, 7, 3058, 678, 4727, 10, 594, 35948, 35904, 6, 220, 12, 11092, 32243, 21, 3744, 6, 8, 1487, 41, 1368, 1879, 12, 134, 1029, 12, 37597, 1499, 4, 12432, 2963, 9, 10146, 26511, 1070, 1368, 1879, 12, 134, 27392, 27958, 11, 5, 30146, 6, 8385, 6, 748, 1594, 6, 16028, 8, 3087, 506, 3806, 8, 10, 583, 12, 27527, 748, 329, 705, 27392, 58, 13773, 30, 11751, 44871, 42752, 6, 8, 48372, 15557, 3980, 58, 5129, 4, 5, 748, 329, 705, 13931, 12918, 7, 3741, 1829, 195, 8, 5, 1368, 1879, 12, 134, 13931, 16, 10, 919, 9, 5, 3977, 506, 4197, 1215, 1073, 41546, 17215, 45493, 40542, 1026, 11, 34648, 1113, 4, 20862, 3457, 13, 740, 26649, 1368, 1879, 74, 28, 5616, 147, 678, 11, 1484, 10864, 19, 1177, 38407, 10100, 528, 7, 748, 329, 705, 8, 97, 23609, 5580, 21717, 11, 449, 783, 8209, 7, 7722, 1109, 15, 5, 774, 9, 1368, 1879, 11, 1177, 38407, 10100, 1200, 11, 34648, 1113, 4, 42, 266, 11569, 21871, 5, 774, 9, 5, 3977, 506, 4197, 1215, 1073, 17215, 45493, 40542, 1026, 11, 1368, 1879, 11341, 11, 34648, 1113, 8, 67, 2029, 10, 6104, 9186, 34934, 9, 748, 329, 705, 11, 449, 783, 8209, 6, 34648, 1113, 4, 5, 804, 1732, 6308, 35818, 1468, 577, 23, 158, 4, 1225, 5334, 73, 29, 1092, 38848, 12, 39549, 12, 33352, 4283, 12, 406, 4, 1177, 38407, 10100, 16, 10, 1473, 2199, 9, 5, 2900, 17407, 30, 25822, 5638, 337, 8, 2167, 27548, 5298, 479, 566, 5, 144, 1537, 7696, 4685, 9, 1177, 38407, 10100, 684, 3612, 32, 42163, 2007, 1178, 21717, 36, 15354, 705, 238, 15747, 2463, 5104, 992, 13991, 21717, 36, 705, 329, 705, 238, 8, 2914, 1417, 853, 9764, 479, 1050, 13998, 1630, 4550, 33065, 6793, 36, 298, 1879, 43, 11341, 3059, 19, 2906, 326, 3551, 12, 43728, 17381, 1455, 215, 41, 945, 4, 10944, 1389, 9, 1368, 1879, 910, 2133, 11, 5, 29012, 7450, 4182, 6204, 12293, 36, 11365, 506, 43, 33, 67, 57, 3059, 19, 1368, 1879, 1177, 38407, 10100, 19, 678, 7757, 709, 88, 25842, 12854, 2632, 36, 625, 438, 43, 646, 306, 6, 195, 8174, 45493, 40542, 1368, 1879, 2849, 41817, 14, 32, 303, 11, 2], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'global_attention_mask': [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'labels': [0, 41552, 104, 15698, 3618, 50118, 4086, 34527, 10100, 16, 10, 1473, 2199, 9, 5, 2900, 17407, 30, 25822, 5638, 337, 8, 2167, 27548, 5298, 4, 49703, 104, 15698, 28696, 104, 15698, 1368, 1879, 11341, 904, 23609, 5580, 21717, 6, 215, 25, 15747, 2463, 5104, 12, 329, 13991, 6793, 36, 705, 329, 705, 238, 5, 778, 7, 1303, 1177, 38407, 10100, 11, 1484, 4, 49703, 104, 15698, 28696, 104, 15698, 89, 16, 10, 1762, 9, 335, 15, 5, 9186, 5845, 9, 748, 329, 705, 11, 34648, 1113, 8, 97, 1667, 9, 9724, 14962, 61, 3441, 32243, 8, 34934, 3218, 7, 1100, 4, 49703, 104, 15698, 28696, 104, 15698, 5, 2171, 10795, 9, 1368, 1879, 12, 134, 11, 3072, 9724, 14962, 67, 3441, 11152, 5786, 13, 5, 17837, 9, 92, 9186, 4620, 4, 49703, 104, 15698, 28696, 104, 15698, 403, 5209, 50118, 705, 329, 705, 21, 12333, 11, 5, 740, 26649, 7728, 9, 41, 365, 12, 180, 12, 279, 3186, 10864, 19, 5298, 9, 1177, 38407, 10100, 30, 588, 12, 958, 181, 8344, 25378, 21611, 4, 49703, 104, 15698, 28696, 104, 15698, 7, 3058, 678, 4727, 10, 594, 35948, 35904, 6, 220, 12, 11092, 32243, 21, 3744, 6, 8, 1487, 41, 1368, 1879, 12, 134, 1029, 12, 37597, 1499, 4, 49703, 104, 15698, 28696, 104, 15698, 12432, 2963, 9, 10146, 26511, 1070, 1368, 1879, 12, 134, 27392, 27958, 11, 5, 30146, 6, 8385, 6, 748, 1594, 6, 16028, 8, 3087, 506, 3806, 8, 10, 583, 12, 27527, 748, 329, 705, 27392, 58, 13773, 30, 11751, 44871, 42752, 6, 8, 48372, 15557, 3980, 58, 5129, 4, 49703, 104, 15698, 28696, 104, 15698, 5, 748, 329, 705, 13931, 12918, 7, 3741, 1829, 195, 8, 5, 1368, 1879, 12, 134, 13931, 16, 10, 919, 9, 5, 3977, 506, 4197, 1215, 1073, 41546, 17215, 45493, 40542, 1026, 11, 34648, 1113, 4, 49703, 104, 15698, 28696, 104, 15698, 14070, 50118, 37445, 31831, 3457, 13, 740, 26649, 1368, 1879, 74, 28, 5616, 147, 678, 11, 1484, 10864, 19, 1177, 38407, 10100, 528, 7, 748, 329, 705, 8, 97, 23609, 5580, 21717, 11, 449, 783, 8209, 7, 7722, 1109, 15, 5, 774, 9, 1368, 1879, 11, 1177, 38407, 10100, 1200, 11, 34648, 1113, 4, 49703, 104, 15698, 28696, 104, 15698, 42, 266, 11569, 21871, 5, 774, 9, 5, 3977, 506, 4197, 1215, 1073, 17215, 45493, 40542, 1026, 11, 1368, 1879, 11341, 11, 34648, 1113, 8, 67, 2029, 10, 6104, 9186, 34934, 9, 748, 329, 705, 11, 449, 783, 8209, 6, 34648, 1113, 4, 49703, 104, 15698, 28696, 104, 15698, 35818, 335, 50118, 627, 804, 1732, 6308, 35818, 1468, 577, 23, 158, 4, 1225, 5334, 73, 29, 1092, 38848, 12, 39549, 12, 33352, 4283, 12, 406, 4, 49703, 104, 15698, 2, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100]}
+⚠️  Detected missing `article/abstract` in train/val; rebuilding splits from CSV for SFT...
+🔎 filtering samples with too-short targets (<2 tokens after tokenization)…
+Filter:   0%|          | 0/8000 [00:00<?, ? examples/s]Filter:  12%|█▎        | 1000/8000 [00:00<00:05, 1281.95 examples/s]Filter:  25%|██▌       | 2000/8000 [00:01<00:03, 1591.97 examples/s]Filter:  38%|███▊      | 3000/8000 [00:01<00:02, 1748.53 examples/s]Filter:  50%|█████     | 4000/8000 [00:02<00:02, 1819.81 examples/s]Filter:  62%|██████▎   | 5000/8000 [00:02<00:01, 1874.36 examples/s]Filter:  75%|███████▌  | 6000/8000 [00:03<00:01, 1917.06 examples/s]Filter:  88%|████████▊ | 7000/8000 [00:03<00:00, 1927.87 examples/s]Filter: 100%|██████████| 8000/8000 [00:04<00:00, 1951.92 examples/s]Filter: 100%|██████████| 8000/8000 [00:04<00:00, 1830.77 examples/s]
+Filter:   0%|          | 0/800 [00:00<?, ? examples/s]Filter: 100%|██████████| 800/800 [00:00<00:00, 1934.81 examples/s]Filter: 100%|██████████| 800/800 [00:00<00:00, 1930.63 examples/s]
+Filter:   0%|          | 0/800 [00:00<?, ? examples/s]Filter: 100%|██████████| 800/800 [00:00<00:00, 2028.78 examples/s]Filter: 100%|██████████| 800/800 [00:00<00:00, 2024.10 examples/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+MXFP4 quantization is only supported on GPUs with compute capability >= 7.5 (e.g T4, A100, L4, H100, or B200). We will default to dequantizing the model to bf16.
+sizes after filter: 8000 800 800
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [01:53<03:47, 113.93s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [02:28<01:07, 67.45s/it] Loading checkpoint shards: 100%|██████████| 3/3 [03:39<00:00, 69.03s/it]Loading checkpoint shards: 100%|██████████| 3/3 [03:39<00:00, 73.25s/it]
+Some parameters are on the meta device because they were offloaded to the cpu.
+🎯 leftover non-fp16 in experts: [('base_model.model.model.layers.0.mlp.experts.gate_up_proj', 'torch.bfloat16'), ('base_model.model.model.layers.0.mlp.experts.down_proj', 'torch.bfloat16'), ('base_model.model.model.layers.1.mlp.experts.gate_up_proj', 'torch.bfloat16'), ('base_model.model.model.layers.1.mlp.experts.down_proj', 'torch.bfloat16'), ('base_model.model.model.layers.2.mlp.experts.gate_up_proj', 'torch.bfloat16'), ('base_model.model.model.layers.2.mlp.experts.down_proj', 'torch.bfloat16'), ('base_model.model.model.layers.3.mlp.experts.gate_up_proj', 'torch.bfloat16'), ('base_model.model.model.layers.3.mlp.experts.down_proj', 'torch.bfloat16'), ('base_model.model.model.layers.4.mlp.experts.gate_up_proj', 'torch.bfloat16'), ('base_model.model.model.layers.4.mlp.experts.down_proj', 'torch.bfloat16')]
+Traceback (most recent call last):
+  File "/ocean/projects/cis230089p/slin23/full_text_label/gpt/gpt_fine_tune.py", line 922, in <module>
+    main()
+  File "/ocean/projects/cis230089p/slin23/full_text_label/gpt/gpt_fine_tune.py", line 375, in main
+    bf16_expert_params = [n for n, p in model.named_parameters()
+  File "/ocean/projects/cis230089p/slin23/full_text_label/gpt/gpt_fine_tune.py", line 376, in <listcomp>
+    if any(k in n for k in name_hits)
+NameError: name 'name_hits' is not defined

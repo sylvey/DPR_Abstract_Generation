@@ -2,3 +2,11 @@ data
 middle_files
 .ipynb_checkpoints
 models
+gpt/gpt-oss-20b
+gpt/gptoss20b_lora_abs
+led/led_pubmed_finetune_5000
+led/led_pubmed_finetune_6000
+led/led_pubmed_finetune_7000
+led/led_pubmed_finetune_8000
+led/led_pubmed_finetune_all
+led/led_pubmed_model
