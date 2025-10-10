@@ -2,6 +2,8 @@ import pandas as pd
 from datasets import Dataset
 from sklearn.model_selection import train_test_split
 import os
+import json, time
+from pathlib import Path
 import pickle
 #!/usr/bin/env python3
 from datasets import load_dataset, load_metric
@@ -525,26 +527,89 @@ def main():
 
     pubmed_test.set_format(type="python")
 
-    
-
-
-
-
     result = pubmed_test.map(generate_answer, batched=True, batch_size=1)
 
+    # ===== SAVE ALL TEST GENERATIONS =====
+    out_dir = Path("./led_pubmed_finetune/preds")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    gen_path = out_dir / f"test_generations_{stamp}.jsonl"       # main output
+    meta_path = out_dir / f"test_generations_{stamp}.meta.json"  # sidecar metadata
+
+    # Write JSONL: one example per line with id / pred / ref
+    with gen_path.open("w", encoding="utf-8") as f:
+        for i, (p, r) in enumerate(zip(result["predicted_abstract"], result["abstract"])):
+            rec = {
+                "id": i,
+                "prediction": p,
+                "reference": r,
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    # Optional: record exact generation settings for provenance/repro
+    meta = {
+        "time": stamp,
+        "model_name_or_path": "./led_pubmed_model",
+        "num_beams": getattr(led.config, "num_beams", None),
+        "max_length": getattr(led.config, "max_length", None),
+        "min_length": getattr(led.config, "min_length", None),
+        "length_penalty": getattr(led.config, "length_penalty", None),
+        "early_stopping": getattr(led.config, "early_stopping", None),
+        "no_repeat_ngram_size": getattr(led.config, "no_repeat_ngram_size", None),
+        "tokenizer": tokenizer.name_or_path if hasattr(tokenizer, "name_or_path") else "unknown",
+    }
+    with meta_path.open("w", encoding="utf-8") as f:
+        json.dump(meta, f, ensure_ascii=False, indent=2)
+
+    print(f"✅ Saved generations to: {gen_path}")
+    print(f"📝 Saved metadata to:    {meta_path}")
+
     
 
-    print("Result:", rouge.compute(predictions=result["predicted_abstract"], references=result["abstract"], rouge_types=["rouge2"])["rouge2"])
-    rouge_result = rouge.compute(
-        predictions=result["predicted_abstract"],
-        references=result["abstract"],
-        rouge_types=["rouge1", "rouge2", "rougeL"],
-        use_aggregator=True  # 加上這句
-    )
+    # print("Result:", rouge.compute(predictions=result["predicted_abstract"], references=result["abstract"], rouge_types=["rouge2"])["rouge2"])
+    # rouge_result = rouge.compute(
+    #     predictions=result["predicted_abstract"],
+    #     references=result["abstract"],
+    #     rouge_types=["rouge1", "rouge2", "rougeL"],
+    #     use_aggregator=True  # 加上這句
+    # )
 
-    print("ROUGE-1:", rouge_result["rouge1"])
-    print("ROUGE-2:", rouge_result["rouge2"])
-    print("ROUGE-L:", rouge_result["rougeL"])
+    # print("ROUGE-1:", rouge_result["rouge1"])
+    # print("ROUGE-2:", rouge_result["rouge2"])
+    # print("ROUGE-L:", rouge_result["rougeL"])
+
+
+    # # ===== BERTScore =====
+    # # 可選：過濾掉 OOM / Runtime Error 的樣本，避免影響分數
+    # preds = []
+    # refs = []
+    # for p, r in zip(result["predicted_abstract"], result["abstract"]):
+    #     if p not in ("[OOM ERROR]", "[Runtime ERROR]"):
+    #         preds.append(p)
+    #         refs.append(r)
+
+    # from evaluate import load as eval_load
+
+    # bertscore = eval_load("bertscore")
+
+    # # 注意：使用 SciBERT 時通常不要用 baseline rescale
+    # bs = bertscore.compute(
+    #     predictions=preds,
+    #     references=refs,
+    #     lang="en",
+    #     model_type="./models/scibert",
+    #     rescale_with_baseline=False,
+    #     device="cuda" if torch.cuda.is_available() else "cpu",
+    #     batch_size=16,  # 依GPU記憶體調整
+    # )
+
+
+    # # BERTScore 會回傳每筆的 P/R/F1 list，這裡取平均再印出
+    # p = float(np.mean(bs["precision"]))
+    # r = float(np.mean(bs["recall"]))
+    # f = float(np.mean(bs["f1"]))
+    # print(f"BERTScore (model={bs.get('model_type','')}) -> P: {p:.4f}  R: {r:.4f}  F1: {f:.4f}")
 
 
 if __name__ == "__main__":

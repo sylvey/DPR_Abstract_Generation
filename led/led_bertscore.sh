@@ -33,5 +33,6 @@ conda activate /ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16
 # python -c "import torch; print(torch.__version__)"
 
 
-python fine_tune_longformer_encoder_upgrade.py 
 
+python bertscore.py led_pubmed_finetune/preds/test_generations_20251005_013152.jsonl \
+  --model_type ./models/scibert --filter_errors --batch_size 16 --device cuda

@@ -1,0 +1,74 @@
++ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
++ PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
++ cd /ocean/projects/cis230089p/slin23/full_text_label/led
++ source /ocean/projects/cis230089p/slin23/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate /ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate /ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate /ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16
+++ '[' -n '' ']'
+++ /ocean/projects/cis230089p/slin23/miniconda3/bin/conda shell.posix activate /ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(led_fp16) '\''
+export PATH='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin'\''
+export CONDA_PREFIX='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''led_fp16'\''
+export CONDA_PROMPT_MODIFIER='\''(led_fp16) '\''
+export CONDA_PREFIX_1='\''/ocean/projects/cis230089p/slin23/miniconda3'\''
+export CONDA_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(led_fp16) '\''
+export PATH='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin'\''
+export CONDA_PREFIX='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''led_fp16'\''
+export CONDA_PROMPT_MODIFIER='\''(led_fp16) '\''
+export CONDA_PREFIX_1='\''/ocean/projects/cis230089p/slin23/miniconda3'\''
+export CONDA_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(led_fp16) '
+++ export PATH=/ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin
+++ PATH=/ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin
+++ export CONDA_PREFIX=/ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16
+++ CONDA_PREFIX=/ocean/projects/cis230089p/slin23/miniconda3/envs/led_fp16
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=led_fp16
+++ CONDA_DEFAULT_ENV=led_fp16
+++ export 'CONDA_PROMPT_MODIFIER=(led_fp16) '
+++ CONDA_PROMPT_MODIFIER='(led_fp16) '
+++ export CONDA_PREFIX_1=/ocean/projects/cis230089p/slin23/miniconda3
+++ CONDA_PREFIX_1=/ocean/projects/cis230089p/slin23/miniconda3
+++ export CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ python rouge.py led_pubmed_finetune/preds/test_generations_20251005_013152.jsonl
+Using the latest cached version of the module from /jet/home/slin23/.cache/huggingface/modules/evaluate_modules/metrics/evaluate-metric--rouge/b01e0accf3bd6dd24839b769a5fda24e14995071570870922c71970b3a6ed886 (last modified on Tue Sep  9 16:12:45 2025) since it couldn't be found locally at evaluate-metric--rouge, or remotely on the Hugging Face Hub.
+=== ROUGE (aggregate F1) ===
+ rouge1: 0.3983
+ rouge2: 0.2011
+ rougeL: 0.2632
