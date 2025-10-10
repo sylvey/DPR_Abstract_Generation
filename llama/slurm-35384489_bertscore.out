@@ -1,0 +1,74 @@
++ cd /ocean/projects/cis230089p/slin23/full_text_label/llama
++ source /ocean/projects/cis230089p/slin23/miniconda3/etc/profile.d/conda.sh
+++ export CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ '[' -z x ']'
++ conda activate /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
++ '[' -n '' ']'
++ local ask_conda
+++ PS1=
+++ __conda_exe shell.posix activate /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
+++ '[' -n '' ']'
+++ /ocean/projects/cis230089p/slin23/miniconda3/bin/conda shell.posix activate /ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
++ ask_conda='unset _CE_M
+unset _CE_CONDA
+PS1='\''(gptoss20b) '\''
+export PATH='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin'\''
+export CONDA_PREFIX='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''gptoss20b'\''
+export CONDA_PROMPT_MODIFIER='\''(gptoss20b) '\''
+export CONDA_PREFIX_1='\''/ocean/projects/cis230089p/slin23/miniconda3'\''
+export CONDA_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/python'\'''
++ eval 'unset _CE_M
+unset _CE_CONDA
+PS1='\''(gptoss20b) '\''
+export PATH='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin'\''
+export CONDA_PREFIX='\''/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''gptoss20b'\''
+export CONDA_PROMPT_MODIFIER='\''(gptoss20b) '\''
+export CONDA_PREFIX_1='\''/ocean/projects/cis230089p/slin23/miniconda3'\''
+export CONDA_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/conda'\''
+export CONDA_PYTHON_EXE='\''/ocean/projects/cis230089p/slin23/miniconda3/bin/python'\'''
+++ unset _CE_M
+++ unset _CE_CONDA
+++ PS1='(gptoss20b) '
+++ export PATH=/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin
+++ PATH=/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b/bin:/ocean/projects/cis230089p/slin23/miniconda3/condabin:/opt/packages/psc.allocations.user/bin:/opt/packages/allocations/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/packages/interact/bin:/opt/puppetlabs/bin
+++ export CONDA_PREFIX=/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
+++ CONDA_PREFIX=/ocean/projects/cis230089p/slin23/miniconda3/envs/gptoss20b
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=gptoss20b
+++ CONDA_DEFAULT_ENV=gptoss20b
+++ export 'CONDA_PROMPT_MODIFIER=(gptoss20b) '
+++ CONDA_PROMPT_MODIFIER='(gptoss20b) '
+++ export CONDA_PREFIX_1=/ocean/projects/cis230089p/slin23/miniconda3
+++ CONDA_PREFIX_1=/ocean/projects/cis230089p/slin23/miniconda3
+++ export CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ CONDA_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/conda
+++ export CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/ocean/projects/cis230089p/slin23/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:128
++ PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:128
++ python bertscore.py --pairs outputs/pairs.jsonl --limit 10084 --model_type ../led/models/scibert --batch_size 8 --num_layers 9
+[Loaded] Successfully loaded 4631 pairs from outputs/pairs.jsonl
+INFO: Successfully truncated all sequences to max token length 510 using ../led/models/scibert tokenizer.
+Warning: Empty candidate sentence detected; setting raw BERTscores to 0.
+== BERTScore (SciBERT) ==
+P=0.4087  R=0.5120  F1=0.4499
