@@ -18,7 +18,7 @@ def main():
     ## ----------model-----------------##
 
     model, tokenizer = FastLanguageModel.from_pretrained(
-        model_name = "models/unsloth-llama-3.2-3b",
+        model_name = "../llama/models/unsloth-llama-3.2-3b",
         max_seq_length = MAX_SEQ_LENGTH,
         dtype = None,
         load_in_4bit = True,
@@ -31,6 +31,7 @@ def main():
 
     ## --------data preparation -------##
     _, _, test_set = load()
+    test_set = test_set.select(range(80))
     prompts = build_infer_prompts(tokenizer, test_set, max_seq_length=MAX_SEQ_LENGTH)
 
     preds = batched_generate(
@@ -38,7 +39,7 @@ def main():
         max_seq_length=MAX_SEQ_LENGTH,
         max_new_tokens=512, num_beams=1, batch_size=2
     )
-    refs = [x["abstract"] for x in test_set] 
+    refs = [x["sections"] for x in test_set] 
 
     ## --------------------------------##
     
@@ -81,13 +82,13 @@ def main():
 
 
     # ## --------test--------------------##
-    # # rouge = load_metric("rouge")
-    # refs = [x["abstract"] for x in test_set]
-    # # rouge_res = rouge.compute(predictions=preds, references=refs,
-    # #                           rouge_types=["rouge1","rouge2","rougeL"], use_aggregator=True)
-    # # print("ROUGE-1:", rouge_res["rouge1"])
-    # # print("ROUGE-2:", rouge_res["rouge2"])
-    # # print("ROUGE-L:", rouge_res["rougeL"])
+    rouge = load_metric("rouge")
+    refs = [x["abstract"] for x in test_set]
+    rouge_res = rouge.compute(predictions=preds, references=refs,
+                              rouge_types=["rouge1","rouge2","rougeL"], use_aggregator=True)
+    print("ROUGE-1:", rouge_res["rouge1"])
+    print("ROUGE-2:", rouge_res["rouge2"])
+    print("ROUGE-L:", rouge_res["rougeL"])
 
     # # -------- BERTScore (SciBERT) --------#
     # # Make sure ../led/models/scibert is a valid HF model dir

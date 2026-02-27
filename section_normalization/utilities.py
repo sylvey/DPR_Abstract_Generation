@@ -1,6 +1,6 @@
 from unsloth import FastLanguageModel
 import torch
-from data import load, ensure_llama3_template, generate_conversation  # 直接用你 data.py 裡的
+from data import load, ensure_llama3_template  # 直接用你 data.py 裡的
 # from torch.nn.attention import sdpa_kernel
 from contextlib import nullcontext
 
@@ -36,11 +36,10 @@ def build_infer_prompts(tokenizer, test_set, max_seq_length=2048):
     """只做「user 提問」的 prompt；不包含答案。"""
     ensure_llama3_template(tokenizer)
 
-    # 產出只有 user 的 messages（用你現有的 generate_conversation 當參考）
     msgs = []
     for ex in test_set:
         msgs.append([
-            {"role": "user", "content": f"publication_type: {ex['publication_type']} \narticle: {ex['article']} \n\nJSON Output:"}
+            {"role": "user", "content": f"Paragraphs:{ex['sections']} \nLabels:"}
         ])
     # 用 chat template 串成文字，並加上 generation prompt
     prompts = tokenizer.apply_chat_template(

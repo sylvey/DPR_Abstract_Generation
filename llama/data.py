@@ -3,42 +3,64 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from datasets import Dataset, load_from_disk
 
-CSV_PATH = "../data/all_articles5-v2.csv"
+CSV_PATH = "../data/all_articles5-v2-publication_type.csv"
 CACHE_DIR = "../data/cache"
 
 
 
 def load():
     df = pd.read_csv(CSV_PATH)
-    df = df.rename(columns={"full_text": "article", "abstract": "abstract"})
-    df = df.dropna(subset=["article", "abstract"])
+    df = df.rename(columns={"full_text": "article", "positive_labels": "publication_type"})
+    df = df.dropna(subset=["article", "abstract", "publication_type"])
     df = df[df["article"].str.strip().astype(bool)]
     df = df[df["abstract"].str.strip().astype(bool)]
     df["article"] = df["article"].astype(str)
     df["abstract"] = df["abstract"].astype(str)
+    df['publication_type'] = df['publication_type'].astype(str)
 
     train_df, temp_df = train_test_split(df, test_size=0.2, random_state=42)
     val_df, test_df = train_test_split(temp_df, test_size=0.5, random_state=42)
 
-    pubmed_train = Dataset.from_pandas(train_df[["article", "abstract"]].reset_index(drop=True))
-    pubmed_val   = Dataset.from_pandas(val_df[["article", "abstract"]].reset_index(drop=True))
-    pubmed_test  = Dataset.from_pandas(test_df[["article", "abstract"]].reset_index(drop=True))
+    pubmed_train = Dataset.from_pandas(train_df[["article", "abstract", "publication_type"]].reset_index(drop=True))
+    pubmed_val   = Dataset.from_pandas(val_df[["article", "abstract", "publication_type"]].reset_index(drop=True))
+    pubmed_test  = Dataset.from_pandas(test_df[["article", "abstract", "publication_type"]].reset_index(drop=True))
     return pubmed_train, pubmed_val, pubmed_test
 
 def generate_conversation(examples):
     problems  = examples["article"]
     solutions = examples["abstract"]
+    publication_types = examples["publication_type"]
+
     conversations = []
-    for problem, solution in zip(problems, solutions):
+    for problem, solution, publication_type in zip(problems, solutions, publication_types):
         conversations.append([
-            {"role": "user", "content": "generate the abstract of this:" + problem},
-            {"role": "assistant", "content": solution},
+            {"role": "user", "content": f"publication_type: {publication_type} \narticle: {problem} \n\nJSON Output:"},
+            {"role": "assistant", "content": "{"+f"abstract: {solution}" +"}"},
         ])
     return {"conversations": conversations}
 
 
 LLAMA3_CHAT_TEMPLATE = r"""{% if messages[0]['role'] != 'system' %}
-{% set messages = [{'role':'system','content':'You are a helpful assistant for biomedical article abstract generation.'}] + messages %}
+{% set messages = [{'role':'system','content':((
+                    "You are a biomedical summarization assistant trained to generate accurate, publication-quality abstracts. "
+                    "Your goal is to produce a clear, concise summary in scientific language that accurately reflects the source text. "
+                    "Do not invent or infer information not explicitly stated.\n\n"
+                    "Adjust your tone, structure, and level of detail according to the publication type:\n"
+                    "- **Primary research articles:** Summarize the background, objectives, study design, key methods, main results, and conclusions.\n"
+                    "- **Case reports:** Describe the patient(s), clinical presentation, diagnostic approach, intervention, and outcome.\n"
+                    "- **Reviews (systematic or narrative):** Summarize the topic focus, scope of the literature reviewed, main findings or themes, and key conclusions or implications.\n"
+                    "- **Letters, commentaries, or editorials:** Capture the central argument, critique, or viewpoint being expressed, and briefly note any evidence or context discussed.\n"
+                    "- **Published erratums or corrections:** Identify the correction being made and, if available, its impact on the original findings or interpretation.\n\n"
+                    "Formatting and style requirements:\n"
+                    "- Write one coherent paragraph unless otherwise noted.\n"
+                    "- For **primary research articles** or **reviews**, write about 150–300 words to capture the main points thoroughly.\n"
+                    "- For **case reports**, **letters**, **commentaries**, **editorials**, or **erratums**, write about 100–200 words.\n"
+                    "- You MUST respond with a single, valid JSON object.\n"
+                    "- This JSON object must contain one key: \"abstract\".\n"
+                    "- The value of the \"abstract\" key must be the generated summary string.\n"
+                    "- Example of a perfect response for a primary research article:\n"
+                    "{\"abstract\": \"This study evaluated the efficacy of a new drug.... We conducted a randomized controlled trial with 200 patients... The drug showed a 50% improvement over placebo (p < 0.05)... This new drug is a promising treatment.\"}\n\n"
+                    ))}] + messages %}
 {% endif %}
 {% for m in messages %}
 {{ '<|start_header_id|>' + m['role'] + '<|end_header_id|>\n\n' + m['content'] + '<|eot_id|>' }}

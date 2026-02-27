@@ -94,8 +94,8 @@ def main():
     ## ----------------------------------##
 
     ## ----------save--------------------##
-    model.save_pretrained("lora_model")  # Local saving
-    tokenizer.save_pretrained("lora_model")
+    model.save_pretrained("lora_model-better-prompts")  # Local saving
+    tokenizer.save_pretrained("lora_model-better-prompts")
     ## ----------------------------------##
     
     

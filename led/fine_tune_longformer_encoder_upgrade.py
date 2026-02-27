@@ -57,7 +57,7 @@ def generate_answer(batch):
             inputs_dict = tokenizer(
                 batch["article"],
                 padding="max_length",
-                max_length=512,
+                max_length=8192,
                 truncation=True,
                 return_tensors="pt"
             )
@@ -172,7 +172,7 @@ def main():
     torch.cuda.empty_cache()
     torch.cuda.reset_peak_memory_stats()
 
-    cache_path = "../data/pubmed_datasets.pkl"
+    cache_path = "../data/pubmed_datasets_new.pkl"
 
     if os.path.exists(cache_path):
         print(f"✅ Loading datasets from cache: {cache_path}")
@@ -202,24 +202,25 @@ def main():
         pubmed_val   = Dataset.from_pandas(val_df[["article", "abstract"]].reset_index(drop=True))
         pubmed_test  = Dataset.from_pandas(test_df[["article", "abstract"]].reset_index(drop=True))
 
+        
         # pubmed_train = pubmed_train.select(range(min(len(pubmed_train), 8000)))
         # pubmed_val   = pubmed_val.select(range(min(len(pubmed_val), 800)))
         # pubmed_test  = pubmed_test.select(range(min(len(pubmed_test), 800)))
 
         tokenizer = AutoTokenizer.from_pretrained("./led_pubmed_model")
-        encoder_max_length = 512
+        encoder_max_length = 8192
         decoder_max_length = 512
 
         def process_data_to_model_inputs(example):
             inputs = tokenizer(
                 example["article"],
-                padding="max_length",
+                padding=False,
                 truncation=True,
                 max_length=encoder_max_length,
             )
             outputs = tokenizer(
                 example["abstract"],
-                padding="max_length",
+                padding=False,
                 truncation=True,
                 max_length=decoder_max_length,
             )
@@ -273,11 +274,11 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained("./led_pubmed_model")
 
     # max encoder length is 8192 for PubMed
-    encoder_max_length = 512
+    encoder_max_length = 8192
     decoder_max_length = 512
     batch_size = 1
 
-
+    eval_dataset_small = pubmed_val.select(range(min(len(pubmed_val), 100)))
 
     print(len(pubmed_train))
 
@@ -290,25 +291,28 @@ def main():
         fp16=True,
         output_dir="./led_pubmed_finetune",
         logging_steps=250,
-        eval_steps=1000,                 # ← 讓訓練中真的會 eval
-        save_steps=1000,
+        eval_steps=500,                 # ← 讓訓練中真的會 eval
+        save_steps=500,
         save_total_limit=2,
         load_best_model_at_end=True,     # ← 重要
         metric_for_best_model="eval_rouge2_fmeasure",
         greater_is_better=True,
-        max_grad_norm=1.0,
+        max_grad_norm=0.5,          # originally 1.0
         warmup_ratio=0.06,               # ← 用比例，避免不同資料量失衡
-        gradient_accumulation_steps=4,
+        gradient_accumulation_steps=8,
         remove_unused_columns=False,
         dataloader_num_workers=0,
         group_by_length=False,
         dataloader_drop_last=True,
 
-        max_steps=11500,
+        learning_rate=2e-5, # added for longer prompts
+
+        # max_steps=11500,
+        num_train_epochs=1,
 
         # 明確鎖住生成參數，避免路徑差異
-        generation_max_length=512,
-        generation_num_beams=4,
+        generation_max_length=128,
+        generation_num_beams=1,
     )
 
 
@@ -413,10 +417,12 @@ def main():
     )
 
 
-    led.led.encoder.gradient_checkpointing = False
-    led.led.encoder._gradient_checkpointing = False
+    led.gradient_checkpointing_enable()
     led.led.decoder.gradient_checkpointing = False
-    led.led.decoder._gradient_checkpointing = False
+    # led.led.encoder.gradient_checkpointing = True
+    # led.led.encoder._gradient_checkpointing = False
+    # led.led.decoder.gradient_checkpointing = False
+    # led.led.decoder._gradient_checkpointing = False
 
 
 
@@ -437,7 +443,7 @@ def main():
         model=led,
         args=training_args,
         train_dataset=pubmed_train,
-        eval_dataset=pubmed_val,
+        eval_dataset=eval_dataset_small,
         tokenizer=tokenizer,
         callbacks=[IgnoreGradCallback()],
         compute_metrics=compute_metrics,
@@ -567,50 +573,7 @@ def main():
 
     
 
-    # print("Result:", rouge.compute(predictions=result["predicted_abstract"], references=result["abstract"], rouge_types=["rouge2"])["rouge2"])
-    # rouge_result = rouge.compute(
-    #     predictions=result["predicted_abstract"],
-    #     references=result["abstract"],
-    #     rouge_types=["rouge1", "rouge2", "rougeL"],
-    #     use_aggregator=True  # 加上這句
-    # )
-
-    # print("ROUGE-1:", rouge_result["rouge1"])
-    # print("ROUGE-2:", rouge_result["rouge2"])
-    # print("ROUGE-L:", rouge_result["rougeL"])
-
-
-    # # ===== BERTScore =====
-    # # 可選：過濾掉 OOM / Runtime Error 的樣本，避免影響分數
-    # preds = []
-    # refs = []
-    # for p, r in zip(result["predicted_abstract"], result["abstract"]):
-    #     if p not in ("[OOM ERROR]", "[Runtime ERROR]"):
-    #         preds.append(p)
-    #         refs.append(r)
-
-    # from evaluate import load as eval_load
-
-    # bertscore = eval_load("bertscore")
-
-    # # 注意：使用 SciBERT 時通常不要用 baseline rescale
-    # bs = bertscore.compute(
-    #     predictions=preds,
-    #     references=refs,
-    #     lang="en",
-    #     model_type="./models/scibert",
-    #     rescale_with_baseline=False,
-    #     device="cuda" if torch.cuda.is_available() else "cpu",
-    #     batch_size=16,  # 依GPU記憶體調整
-    # )
-
-
-    # # BERTScore 會回傳每筆的 P/R/F1 list，這裡取平均再印出
-    # p = float(np.mean(bs["precision"]))
-    # r = float(np.mean(bs["recall"]))
-    # f = float(np.mean(bs["f1"]))
-    # print(f"BERTScore (model={bs.get('model_type','')}) -> P: {p:.4f}  R: {r:.4f}  F1: {f:.4f}")
-
+    
 
 if __name__ == "__main__":
     main()

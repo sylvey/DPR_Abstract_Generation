@@ -1,3 +1,6 @@
+import torch
+from transformers import AutoTokenizer, LongT5ForConditionalGeneration
+
 #!/usr/bin/env python3
 import os
 import json, time
@@ -42,28 +45,30 @@ F.softmax = stable_softmax
 def generate_answer(batch, output_path):
     try:
         with torch.no_grad():
-            inputs_dict = tokenizer(
-                batch["article"],
-                padding=True,
-                max_length=8192,
-                truncation=True,
-                return_tensors="pt"
-            )
-            input_ids = inputs_dict["input_ids"].to(device)
-            attention_mask = inputs_dict["attention_mask"].to(device)
 
-            global_attention_mask = torch.zeros_like(attention_mask)
-            global_attention_mask[:, 0] = 1  # 讓第一個 token (通常是 BOS) 有 global attention
+            inputs = tokenizer(
+                batch["article"], 
+                return_tensors="pt", 
+                padding=True, 
+                truncation=True, 
+                max_length=8192  
+            ).to(device)
 
-            predicted_ids = led.generate(
-                input_ids=input_ids,
-                attention_mask=attention_mask,
-                global_attention_mask=global_attention_mask,
-                max_length=512,
+            sequences = model.generate(
+                inputs.input_ids,
+                attention_mask=inputs.attention_mask,
+                max_new_tokens=512,
                 num_beams=4,
+                early_stopping=True,   
+                no_repeat_ngram_size=3,
+                use_cache=True       
             )
 
-            decoded = tokenizer.batch_decode(predicted_ids, skip_special_tokens=True)
+            # 如果 model.generate 回傳的是物件 (因為 return_dict_in_generate=True)
+            if hasattr(sequences, "sequences"):
+                sequences = sequences.sequences
+
+            decoded = tokenizer.batch_decode(sequences, skip_special_tokens=True)
             batch["predicted_abstract"] = decoded
 
             with open(output_path, "a", encoding="utf-8") as f:
@@ -104,7 +109,7 @@ class LEDForConditionalGenerationWithGlobalMask(LEDForConditionalGeneration):
 # Main (TEST ONLY)
 # -----------------------------
 def main():
-    global tokenizer, led, device
+    global tokenizer, model, device
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
@@ -148,23 +153,8 @@ def main():
 
     # === 2) 載入 tokenizer / model（arXiv 版）===
     model_dir = args.model_dir
-    
+    model = LongT5ForConditionalGeneration.from_pretrained(model_dir, return_dict_in_generate=True, torch_dtype=torch.float16,).to(device)
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
-
-    led = LEDForConditionalGenerationWithGlobalMask.from_pretrained(
-        model_dir,
-        use_cache=True,   # 生成時可開可關；關閉對長文較省顯存
-        # torch_dtype=torch.float16,  # 若顯存夠、且希望更快可打開
-    )
-    led.to(device)
-    led.eval()
-
-    led.config.num_beams = 4
-    led.config.max_length = 512
-    led.config.min_length = 100
-    led.config.length_penalty = 2.0
-    led.config.early_stopping = True
-    led.config.no_repeat_ngram_size = 3
 
     out_dir = Path("./models/preds")
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -175,23 +165,17 @@ def main():
 
     print(f"📂 Output will be streamed to: {gen_path}")
     
-    # 先建立空檔案 (或是清空舊檔案)，確保從頭開始寫
     with open(gen_path, 'w', encoding='utf-8') as f:
         pass
 
-    # # === 3) 逐批生成摘要 ===
-    result = pubmed_test.map(generate_answer, batched=True, batch_size=4, fn_kwargs={"output_path": gen_path})
+    result = pubmed_test.map(generate_answer, batched=True, batch_size=1, fn_kwargs={"output_path": gen_path})
 
 
     meta = {
         "time": stamp,
         "model_name_or_path": args.model_dir,
-        "num_beams": getattr(led.config, "num_beams", None),
-        "max_length": getattr(led.config, "max_length", None),
-        "min_length": getattr(led.config, "min_length", None),
-        "length_penalty": getattr(led.config, "length_penalty", None),
-        "early_stopping": getattr(led.config, "early_stopping", None),
-        "no_repeat_ngram_size": getattr(led.config, "no_repeat_ngram_size", None),
+        "num_beams": getattr(model.config, "num_beams", 4),
+        "max_length": getattr(model.config, "max_length", None),
         "tokenizer": tokenizer.name_or_path if hasattr(tokenizer, "name_or_path") else "unknown",
     }
     with meta_path.open("w", encoding="utf-8") as f:
@@ -200,17 +184,11 @@ def main():
     print(f"✅ Saved generations to: {gen_path}")
     print(f"📝 Saved metadata to:    {meta_path}")
 
-    # # === 5) 計算 ROUGE ===
-    # rouge = load("rouge")
-    # rouge_result = rouge.compute(
-    #     predictions=result["predicted_abstract"],
-    #     references=result["abstract"],
-    #     rouge_types=["rouge1", "rouge2", "rougeL"],
-    #     use_aggregator=True
-    # )
-    # print("ROUGE-1:", rouge_result["rouge1"])
-    # print("ROUGE-2:", rouge_result["rouge2"])
-    # print("ROUGE-L:", rouge_result["rougeL"])
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
