@@ -10,3 +10,5 @@ led/led_pubmed_finetune_7000
 led/led_pubmed_finetune_8000
 led/led_pubmed_finetune_all
 led/led_pubmed_model
+*.sh
+*.out
